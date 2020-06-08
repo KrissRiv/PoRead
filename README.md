@@ -1,7 +1,11 @@
 # PoRead
 Application in React Native to manage publications, it is an exercise application that mixes several useful features such as its architecture, the management of graphic assets in JSON format, among other qualities.
 
-## Comenzando 🚀
+# Architecture
+Although it is a simple project, I used the bases of [atomic design](https://atomicdesign.bradfrost.com/chapter-2/), to achieve an organized development of the application.
+For user feedback and enhance the experience, I used [micro-interactions](https://www.hiberus.com/crecemos-contigo/como-las-microinteracciones-mejoran-la-ux/)
+
+## First 🚀
 
 _Use the next command for obtain a copy_ 
 ```
