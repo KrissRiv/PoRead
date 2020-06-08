@@ -17,11 +17,12 @@ See **Deployment** for more info regardin to how to deploy.
 
 ### Pre-requirements 📋
 
-_For this project you need Java Development Kit, Android Studio and Node_
+_For this project you need Java Development Kit, Android Studio Cocoapods and Node_
 
 * [JDK](https://www.oracle.com/java/technologies/javase-jdk14-downloads.html)
 * [Android Studio](https://developer.android.com/studio)
 * [Node](https://nodejs.org/es/download/)
+* [Cocoapods](https://cocoapods.org/)
 
 ### Install 🔧
 
@@ -39,10 +40,21 @@ _when install finish, run the next command_
 ```
 npx react-native run-android
 ```
+_the last command execute Android app version_
+_for iOs app, run the next commands_
+```
+cd ios
+```
+```
+pod install
+```
+```
+npx react-native run-ios
+```
 
 ## Develop with the next 🛠️
 
-_Menciona las herramientas que utilizaste para crear tu proyecto_
+_The next tools, libs or frameworks, were to use for develop the app_
 
 * [React Native](https://reactnative.dev/) - React Native Documentation
 * [Lottie](https://docs.expo.io/versions/v37.0.0/sdk/lottie/) - Manage Microinteractions
