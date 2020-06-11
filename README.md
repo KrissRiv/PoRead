@@ -61,6 +61,6 @@ _The next tools, libs or frameworks, were to use for develop the app_
 * [Async Storage](https://react-native-community.github.io/async-storage/) - For Storage
 * [Navigation](https://reactnavigation.org/) - Navigation Manager
 
-## Autores ✒️
+## Author ✒️
 
 * **Cristian Rivas** - *Developer* - [krissriv](https://github.com/KrissRiv)
