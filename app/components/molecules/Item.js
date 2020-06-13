@@ -7,8 +7,8 @@ import Icon from '../atoms/Icon';
 const favoriteMarkSource = require('../../assets/icons/favorite-mark.json');
 
 const Item = props => {
-  const {id, isNew, isFavorite, navigation, onDelete, title} = props;
-  //console.log('props ', props);
+  const {navigation, onDelete, post} = props;
+  //console.log('post ', post);
   const [selectId, setSelectId] = useState(null);
   const config = {
     velocityThreshold: 0.2,
@@ -16,17 +16,12 @@ const Item = props => {
   };
 
   const goDetail = propsPost => {
-    const {body, currentPosts, onOpen, setPost, userId} = propsPost;
+    const {currentPosts, onOpen, setPost} = propsPost;
     navigation.navigate('Detail', {
-      body,
+      post,
       currentPosts,
-      id,
-      isNew,
-      isFavorite,
       onOpen,
       setPost,
-      title,
-      userId,
     });
   };
 
@@ -42,15 +37,15 @@ const Item = props => {
   return (
     <GestureRecognizer
       config={config}
-      onSwipeLeft={() => onSwipeLeft(id)}
+      onSwipeLeft={() => onSwipeLeft(post.id)}
       onSwipeRight={onSwipeRight}
       style={
-        selectId === id ? [styles.container, styles.active] : styles.container
+        selectId === post.id ? [styles.container, styles.active] : styles.container
       }>
       <TouchableOpacity style={styles.item} onPress={() => goDetail(props)}>
-        <View style={isNew ? styles.circle : styles.without_circle} />
-        <Text style={styles.title}>{title}</Text>
-        {isFavorite && (
+        <View style={post.isNew ? styles.circle : styles.without_circle} />
+        <Text style={styles.title}>{post.title}</Text>
+        {post.isFavorite && (
           <Icon
             style={styles.favorite}
             colorFilters={[{keypath: 'Star Outlines', color: '#daa520'}]}

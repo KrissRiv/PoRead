@@ -11,6 +11,7 @@ import {Alert, View, VirtualizedList, StyleSheet} from 'react-native';
 import {useAsyncStorage} from '@react-native-community/async-storage';
 import Toast from 'react-native-simple-toast';
 
+import useFetch from '../hooks/useFetch';
 import Header from '../molecules/Header';
 import Filters from '../molecules/Filters';
 import Delete from '../molecules/Delete';
@@ -21,12 +22,13 @@ import Item from '../molecules/Item';
 const spinnerSource = require('../../assets/icons/spinner.json');
 
 const Posts = props => {
-  const [isLoading, setLoading] = useState(true);
   const [isFilter, setFilter] = useState(false);
   const [allPosts, setAllPosts] = useState([]);
   const [currentPosts, setCurrentPosts] = useState([]);
   const [favoritePosts, setFavoritePosts] = useState(false);
+
   const {getItem, removeItem, setItem} = useAsyncStorage('@posts');
+  const {error, loading: isLoading, response: posts} = useFetch('posts');
 
   const getAllPosts = () => {
     fetch('https://jsonplaceholder.typicode.com/posts')
@@ -41,17 +43,27 @@ const Posts = props => {
         setCurrentPosts(listPosts);
         setItem(JSON.stringify(listPosts));
       })
-      .catch(error => console.error(error))
-      .finally(() => setLoading(false));
+      .catch(error => console.error(error));
   };
 
-  const fetchPosts = async () => {
+  const getData = () => {
+    console.log('getData ', isFilter);
+    let data = [];
+    if (isFilter) {
+      data = posts.filter(post => post.isFavorite);
+    } else {
+      data = posts;
+    }
+    return data;
+  };
+
+  /* const fetchPosts = async () => {
     try {
       const jsonPosts = await getItem();
       const list = JSON.parse(jsonPosts);
       if (list) {
         setCurrentPosts(list);
-        setLoading(false);
+        //setLoading(false);
       } else {
         getAllPosts();
       }
@@ -61,8 +73,8 @@ const Posts = props => {
   };
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    //fetchPosts();
+  }, []); */
 
   const getItemList = (list, index) => {
     return list[index];
@@ -131,11 +143,11 @@ const Posts = props => {
           autoPlay
           loop
         />
-      ) : !isFilter && currentPosts.length > 0 ? (
+      ) : posts ? (
         <>
           <VirtualizedList
-            data={currentPosts}
-            initialNumToRender={50}
+            data={getData()}
+            initialNumToRender={15}
             maxToRenderPerBatch={10}
             getItem={getItemList}
             getItemCount={getItemCountList}
@@ -145,7 +157,8 @@ const Posts = props => {
                 onDelete={onDelete}
                 onOpen={setCurrentPosts}
                 setPost={setItem}
-                currentPosts={currentPosts}
+                currentPosts={posts}
+                post={{...item}}
                 {...item}
                 {...props}
               />
@@ -155,6 +168,12 @@ const Posts = props => {
           />
           <Delete onDelete={onDelete} />
         </>
+      ) : error ? (
+        <Empty
+          title={'All Was Erased'}
+          subTitle={'Hey! Where is my posts?'}
+          type={'internet'}
+        />
       ) : !isFilter && currentPosts.length === 0 ? (
         <Empty
           title={'All Was Erased'}

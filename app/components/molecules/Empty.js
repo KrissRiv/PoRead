@@ -5,6 +5,7 @@ import Icon from '../atoms/Icon';
 const emptySource = {
   delete: require('../../assets/icons/empty.json'),
   favorite: require('../../assets/icons/favorites.json'),
+  internet: require('../../assets/icons/no-wifi.json'),
 };
 
 const Empty = props => {
